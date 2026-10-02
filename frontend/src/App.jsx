@@ -9,10 +9,12 @@ import Privacy from './pages/Privacy';
 import Roadmap from './pages/Roadmap';
 import Simulator from './pages/Simulator';
 import DemoModal from './components/DemoModal';
+import { ThemeProvider, useTheme } from './utils/ThemeContext';
 import { threatApi } from './services/api';
 import { Shield, ExternalLink, Heart } from 'lucide-react';
 
-export default function App() {
+function MainApp() {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [activeChannel, setActiveChannel] = useState('url');
   const [currentReport, setCurrentReport] = useState(null);
@@ -57,7 +59,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col cyber-grid">
+    <div className={`min-h-screen ${theme.bgClass} flex flex-col cyber-grid transition-colors duration-300`}>
       
       {/* Navigation Header */}
       <Navbar
@@ -93,6 +95,8 @@ export default function App() {
           />
         )}
 
+        {activeTab === 'simulator' && <Simulator />}
+
         {activeTab === 'history' && (
           <History
             onSelectReport={(report) => {
@@ -103,8 +107,6 @@ export default function App() {
         )}
 
         {activeTab === 'learn' && <Learn />}
-
-        {activeTab === 'simulator' && <Simulator />}
 
         {activeTab === 'roadmap' && <Roadmap />}
 
@@ -133,5 +135,13 @@ export default function App() {
       </footer>
 
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
   );
 }
