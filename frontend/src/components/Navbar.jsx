@@ -14,6 +14,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenDemoModal }) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Activity },
     { id: 'analyze', label: 'Analyze Threat', icon: ShieldAlert },
+    { id: 'simulator', label: 'Threat Sandbox', icon: Zap },
     { id: 'history', label: 'Threat History', icon: History },
     { id: 'learn', label: 'Cyber Academy', icon: BookOpen },
     { id: 'roadmap', label: 'Future Roadmap', icon: Sparkles },

@@ -7,6 +7,7 @@ import History from './pages/History';
 import Learn from './pages/Learn';
 import Privacy from './pages/Privacy';
 import Roadmap from './pages/Roadmap';
+import Simulator from './pages/Simulator';
 import DemoModal from './components/DemoModal';
 import { threatApi } from './services/api';
 import { Shield, ExternalLink, Heart } from 'lucide-react';
@@ -102,6 +103,8 @@ export default function App() {
         )}
 
         {activeTab === 'learn' && <Learn />}
+
+        {activeTab === 'simulator' && <Simulator />}
 
         {activeTab === 'roadmap' && <Roadmap />}
 
