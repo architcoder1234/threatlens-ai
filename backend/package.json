@@ -1,0 +1,24 @@
+{
+  "name": "threatlens-backend",
+  "version": "1.0.0",
+  "description": "Evidence-Based Digital Threat Analyzer Backend Engine",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": ["cybersecurity", "threat-analyzer", "phishing-detector", "ocr"],
+  "author": "ThreatLens AI Team",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "tesseract.js": "^5.1.1"
+  }
+}
