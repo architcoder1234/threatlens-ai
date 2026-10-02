@@ -23,6 +23,7 @@ router.post('/analyze/message', (req, res) => analysisController.analyzeMessage(
 router.post('/analyze/email', (req, res) => analysisController.analyzeEmail(req, res));
 router.post('/analyze/payment', (req, res) => analysisController.analyzePayment(req, res));
 router.post('/analyze/screenshot', upload.single('screenshot'), (req, res) => analysisController.analyzeScreenshot(req, res));
+router.post('/analyze/audio', (req, res) => analysisController.analyzeAudio(req, res));
 
 // History Endpoints
 router.get('/history', (req, res) => analysisController.getHistory(req, res));

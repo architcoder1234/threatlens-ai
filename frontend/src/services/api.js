@@ -57,6 +57,20 @@ export const threatApi = {
     return res.json();
   },
 
+  // Analyze Voice Call / Vishing
+  async analyzeAudio(audioData) {
+    const res = await fetch(`${API_BASE}/analyze/audio`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(audioData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'Analysis failed' }));
+      throw new Error(err.error || 'Server error during voice analysis');
+    }
+    return res.json();
+  },
+
   // Analyze Screenshot (OCR)
   async analyzeScreenshot(file) {
     const formData = new FormData();

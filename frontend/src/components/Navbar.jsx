@@ -16,6 +16,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenDemoModal }) {
     { id: 'analyze', label: 'Analyze Threat', icon: ShieldAlert },
     { id: 'history', label: 'Threat History', icon: History },
     { id: 'learn', label: 'Cyber Academy', icon: BookOpen },
+    { id: 'roadmap', label: 'Future Roadmap', icon: Sparkles },
     { id: 'privacy', label: 'Privacy & Architecture', icon: Info },
   ];
 

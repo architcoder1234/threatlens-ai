@@ -23,6 +23,8 @@ export default function Learn() {
   const [activeTab, setActiveTab] = useState('modules'); // 'modules' or 'quiz'
   const [modules, setModules] = useState([]);
   const [quizQuestions, setQuizQuestions] = useState([]);
+  const [multilingual, setMultilingual] = useState({});
+  const [selectedLang, setSelectedLang] = useState('en');
   const [loading, setLoading] = useState(true);
 
   // Active module modal or expanded item
@@ -40,6 +42,7 @@ export default function Learn() {
         const data = await threatApi.getLearning();
         setModules(data.modules || []);
         setQuizQuestions(data.quiz || []);
+        setMultilingual(data.multilingual || {});
         if (data.modules?.length > 0) {
           setSelectedModule(data.modules[0]);
         }
@@ -51,6 +54,14 @@ export default function Learn() {
     }
     loadData();
   }, []);
+
+  const t = multilingual[selectedLang] || {
+    heroBadge: 'Interactive Cyber Academy',
+    title: 'Learn How to Spot Digital Threats',
+    subtitle: 'Understand attacker psychology, master warning signs, and test your defensive instincts.',
+    tabLessons: 'Threat Lessons',
+    tabQuiz: 'Interactive Quiz'
+  };
 
   const handleSelectOption = (qId, optIdx) => {
     if (submittedQuizResult) return; // Prevent modifying after submission
@@ -114,39 +125,66 @@ export default function Learn() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 text-xs font-semibold border border-cyan-800/80 mb-2">
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Interactive Cyber Academy</span>
+            <span>{t.heroBadge || 'Interactive Cyber Academy'}</span>
           </div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
-            Learn How to Spot Digital Threats
+            {t.title || 'Learn How to Spot Digital Threats'}
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Understand attacker psychology, master warning signs, and test your defensive instincts.
+            {t.subtitle || 'Understand attacker psychology, master warning signs, and test your defensive instincts.'}
           </p>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex p-1 rounded-xl bg-slate-900 border border-slate-800 w-fit">
-          <button
-            onClick={() => setActiveTab('modules')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'modules'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            Threat Lessons ({modules.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('quiz')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'quiz'
-                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Interactive Quiz</span>
-          </button>
+        {/* Controls: Language Selector + Tab Switcher */}
+        <div className="flex flex-wrap items-center gap-3">
+          
+          {/* Language Selector */}
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+            {[
+              { id: 'en', label: 'EN' },
+              { id: 'hi', label: 'हिंदी' },
+              { id: 'ta', label: 'தமிழ்' },
+              { id: 'te', label: 'తెలుగు' }
+            ].map(lang => (
+              <button
+                key={lang.id}
+                onClick={() => setSelectedLang(lang.id)}
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                  selectedLang === lang.id
+                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {lang.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Switcher */}
+          <div className="flex p-1 rounded-xl bg-slate-900 border border-slate-800 w-fit">
+            <button
+              onClick={() => setActiveTab('modules')}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'modules'
+                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              {t.tabLessons || 'Threat Lessons'} ({modules.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('quiz')}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'quiz'
+                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>{t.tabQuiz || 'Interactive Quiz'}</span>
+            </button>
+          </div>
+
         </div>
       </div>
 

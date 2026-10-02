@@ -33,6 +33,11 @@ export default function Analyze({ activeChannel, setActiveChannel, onAnalysisCom
   const [payNote, setPayNote] = useState(initialData?.note || '');
   const [payLink, setPayLink] = useState(initialData?.linkOrVpa || '');
 
+  // Voice Vishing state
+  const [voiceTranscript, setVoiceTranscript] = useState(initialData?.transcript || '');
+  const [callerName, setCallerName] = useState(initialData?.callerName || '');
+  const [callerNumber, setCallerNumber] = useState(initialData?.callerNumber || '');
+
   // Screenshot OCR state
   const [screenshotFile, setScreenshotFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -89,6 +94,13 @@ export default function Analyze({ activeChannel, setActiveChannel, onAnalysisCom
           note: payNote.trim(),
           linkOrVpa: payLink.trim()
         });
+      } else if (channel === 'voice') {
+        if (!voiceTranscript.trim()) throw new Error('Please enter call transcript or suspicious speech notes.');
+        report = await threatApi.analyzeAudio({
+          transcript: voiceTranscript.trim(),
+          callerName: callerName.trim(),
+          callerNumber: callerNumber.trim()
+        });
       } else if (channel === 'screenshot') {
         if (!screenshotFile) throw new Error('Please upload an image screenshot.');
         setOcrProgressText('Running Tesseract OCR & extracting textual intelligence...');
@@ -111,7 +123,8 @@ export default function Analyze({ activeChannel, setActiveChannel, onAnalysisCom
     { id: 'message', label: 'SMS / Chat', icon: MessageSquare },
     { id: 'email', label: 'Email', icon: Mail },
     { id: 'screenshot', label: 'Screenshot (OCR)', icon: ImageIcon },
-    { id: 'payment', label: 'Payment / UPI', icon: CreditCard }
+    { id: 'payment', label: 'Payment / UPI', icon: CreditCard },
+    { id: 'voice', label: 'Voice / Vishing', icon: Sparkles }
   ];
 
   return (
@@ -366,6 +379,55 @@ export default function Analyze({ activeChannel, setActiveChannel, onAnalysisCom
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-cyan-400 font-mono"
                 />
               </div>
+            </div>
+          )}
+
+          {/* Voice / Vishing Mode */}
+          {channel === 'voice' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Caller Name / Display Claimed
+                  </label>
+                  <input
+                    type="text"
+                    value={callerName}
+                    onChange={(e) => setCallerName(e.target.value)}
+                    placeholder="e.g. Police Officer Sharma / Customs Dept"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-cyan-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Incoming Phone Number (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={callerNumber}
+                    onChange={(e) => setCallerNumber(e.target.value)}
+                    placeholder="e.g. +91 9876543210 or Unknown"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-cyan-400 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  Call Transcript or Speech Notes (What did the caller say?)
+                </label>
+                <textarea
+                  rows={5}
+                  value={voiceTranscript}
+                  onChange={(e) => setVoiceTranscript(e.target.value)}
+                  placeholder="e.g. 'This is CBI Officer from New Delhi. A parcel with drugs in your name was seized at Mumbai Airport. Stay on Skype call in a closed room and do not tell your family. Download AnyDesk to verify your bank accounts immediately to avoid digital arrest warrant.'"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-cyan-400 leading-relaxed"
+                  required
+                />
+              </div>
+              <p className="text-xs text-slate-400">
+                ThreatLens scans for coercive 'Digital Arrest' intimidation, victim isolation demands, and remote screen-sharing tools.
+              </p>
             </div>
           )}
 

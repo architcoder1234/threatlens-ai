@@ -2,12 +2,14 @@ import { urlAnalyzer } from '../services/urlAnalyzer.js';
 import { messageAnalyzer } from '../services/messageAnalyzer.js';
 import { emailAnalyzer } from '../services/emailAnalyzer.js';
 import { ocrService } from '../services/ocrService.js';
+import { audioVishingAnalyzer } from '../services/audioVishingAnalyzer.js';
 import { riskEngine } from '../engines/riskEngine.js';
 import { aiService } from '../services/aiService.js';
 import { recommendationService } from '../services/recommendationService.js';
 import { historyStore } from '../services/historyService.js';
 import { LEARNING_MODULES, QUIZ_QUESTIONS } from '../data/learningData.js';
 import { DEMO_EXAMPLES } from '../data/demoData.js';
+import { MULTILANG_LEARNING } from '../data/multilingualData.js';
 
 class AnalysisController {
   /**
@@ -280,11 +282,41 @@ class AnalysisController {
     res.json({ message: 'All analysis history cleared safely.' });
   }
 
+  // POST /api/analyze/audio (Voice Call / Vishing / Digital Arrest Audio Transcript)
+  async analyzeAudio(req, res) {
+    try {
+      const { transcript = '', callerName = '', callerNumber = '' } = req.body;
+      if (!transcript.trim()) {
+        return res.status(400).json({ error: 'Please provide phone call or voice transcript text.' });
+      }
+
+      const vishRes = await audioVishingAnalyzer.analyzeAudioTranscript(transcript, { callerName, callerNumber });
+      const report = await this._runPipeline({
+        inputType: 'voice',
+        indicators: vishRes.indicators,
+        categories: vishRes.categories,
+        rawContent: { transcript, callerName, callerNumber },
+        previewSnippet: `Call from: ${callerName || callerNumber || 'Unknown'} | "${transcript.slice(0, 80)}..."`,
+        metadata: {
+          callerName,
+          callerNumber,
+          audioSpecificFlags: vishRes.audioSpecificFlags
+        }
+      });
+
+      return res.json(report);
+    } catch (err) {
+      console.error('Audio Vishing analysis failed:', err);
+      return res.status(500).json({ error: 'Voice call analysis failed: ' + err.message });
+    }
+  }
+
   // GET /api/learning
   getLearning(req, res) {
     res.json({
       modules: LEARNING_MODULES,
-      quiz: QUIZ_QUESTIONS
+      quiz: QUIZ_QUESTIONS,
+      multilingual: MULTILANG_LEARNING
     });
   }
 
