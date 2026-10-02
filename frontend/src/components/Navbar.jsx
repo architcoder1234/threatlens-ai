@@ -32,8 +32,9 @@ export default function Navbar({ activeTab, setActiveTab, onOpenDemoModal }) {
     { id: 'simulator', label: 'Threat Sandbox', icon: Zap },
     { id: 'history', label: 'Threat History', icon: History },
     { id: 'learn', label: 'Cyber Academy', icon: BookOpen },
-    { id: 'roadmap', label: 'Future Roadmap', icon: Sparkles },
-    { id: 'privacy', label: 'Privacy & Architecture', icon: Info },
+    { id: 'roadmap', label: 'Roadmap', icon: Sparkles },
+    { id: 'settings', label: 'Settings', icon: SettingsIcon },
+    { id: 'privacy', label: 'Privacy', icon: Info },
   ];
 
   return (

@@ -8,6 +8,7 @@ import Learn from './pages/Learn';
 import Privacy from './pages/Privacy';
 import Roadmap from './pages/Roadmap';
 import Simulator from './pages/Simulator';
+import Settings from './pages/Settings';
 import DemoModal from './components/DemoModal';
 import { ThemeProvider, useTheme } from './utils/ThemeContext';
 import { threatApi } from './services/api';
@@ -109,6 +110,8 @@ function MainApp() {
         {activeTab === 'learn' && <Learn />}
 
         {activeTab === 'roadmap' && <Roadmap />}
+
+        {activeTab === 'settings' && <Settings />}
 
         {activeTab === 'privacy' && <Privacy />}
       </main>
