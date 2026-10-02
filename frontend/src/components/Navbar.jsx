@@ -14,6 +14,18 @@ import { useTheme } from '../utils/ThemeContext';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenDemoModal }) {
   const { currentTheme, theme, changeTheme, availableThemes } = useTheme();
+  const [themeDropdownOpen, setThemeDropdownOpen] = React.useState(false);
+  const dropdownRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setThemeDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Activity },
     { id: 'analyze', label: 'Analyze Threat', icon: ShieldAlert },
@@ -76,39 +88,51 @@ export default function Navbar({ activeTab, setActiveTab, onOpenDemoModal }) {
           {/* Right Action buttons: Theme Switcher + Live Demos */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Theme Selector */}
-            <div className="relative group">
+            {/* Theme Selector Button */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-300 transition-colors cursor-pointer"
+                onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-200 transition-colors cursor-pointer shadow-sm"
                 title="Change Color Theme"
               >
                 <div 
-                  className="w-3 h-3 rounded-full border border-white/20"
+                  className="w-3.5 h-3.5 rounded-full border border-white/30 shrink-0"
                   style={{ backgroundColor: theme.accentColor }}
                 />
-                <span className="hidden sm:inline">{theme.name.split(' ')[0]}</span>
+                <Palette className="w-3.5 h-3.5 text-slate-400" />
+                <span className="hidden sm:inline font-mono">{theme.name}</span>
               </button>
 
-              <div className="absolute right-0 mt-1 hidden group-hover:flex flex-col w-40 p-1.5 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 animate-in fade-in duration-150">
-                <span className="text-[10px] font-mono uppercase text-slate-400 px-2 py-1">Select Theme</span>
-                {availableThemes.map(th => (
-                  <button
-                    key={th.id}
-                    onClick={() => changeTheme(th.id)}
-                    className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-left transition-colors cursor-pointer ${
-                      currentTheme === th.id
-                        ? 'bg-slate-800 text-white font-bold'
-                        : 'text-slate-300 hover:bg-slate-800/60'
-                    }`}
-                  >
-                    <div 
-                      className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: th.accentColor }}
-                    />
-                    <span>{th.name}</span>
-                  </button>
-                ))}
-              </div>
+              {themeDropdownOpen && (
+                <div className="absolute right-0 mt-2 flex flex-col w-48 p-2 rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl z-50 animate-in fade-in duration-150">
+                  <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-slate-800 text-[10px] font-mono uppercase text-slate-400">
+                    <span>Select Color Theme</span>
+                  </div>
+                  {availableThemes.map(th => (
+                    <button
+                      key={th.id}
+                      onClick={() => {
+                        changeTheme(th.id);
+                        setThemeDropdownOpen(false);
+                      }}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-left transition-all cursor-pointer ${
+                        currentTheme === th.id
+                          ? 'bg-slate-800 text-white font-bold border border-slate-700 shadow-sm'
+                          : 'text-slate-300 hover:bg-slate-800/60'
+                      }`}
+                    >
+                      <div 
+                        className="w-3 h-3 rounded-full border border-white/20 shrink-0"
+                        style={{ backgroundColor: th.accentColor }}
+                      />
+                      <span>{th.name}</span>
+                      {currentTheme === th.id && (
+                        <span className="ml-auto text-[10px] font-mono text-cyan-400">Active</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button
