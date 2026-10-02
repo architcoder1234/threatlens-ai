@@ -1,40 +1,73 @@
 # ThreatLens AI — Evidence-Based Digital Threat Analyzer
-> **GFG Code Sangam Hackathon — Problem Statement PS-06: “Understanding Digital Threats”**
+> **GFG Code Sangam Hackathon Submission | Problem Statement PS-06: “Understanding Digital Threats”**
 > 
 > *“We don't just detect digital threats. We explain why they are dangerous. We teach users how to recognize the next one.”*
 
 ---
 
-## 1. Problem Statement & Motivation
-Every day, millions of non-technical internet users fall prey to smishing, look-alike domain phishing, UPI inverse-charge traps, executive spoofing, and social engineering. Most existing antivirus tools and browser extensions simply issue binary verdicts ("Safe" vs "Unsafe") or block pages without explanation. 
+## 📋 Hackathon Compliance & Mandatory Disclosures
 
-**The Problem:**
-- Ordinary users do not understand *why* a particular message or link is dangerous.
-- Because they do not learn the deception techniques, they easily fall for the next variation of the scam.
-- Fear, urgency manipulation, and authority imitation short-circuit rational verification.
+### 1. Mandatory Tool, Framework & AI Disclosures (As per Hackathon Rules)
+In accordance with GFG Code Sangam rules on AI & API disclosure:
+- **AI / LLM Integration:** Uses Google Gemini API / OpenAI API integration through secure backend environment variables for natural language explanation and summarization, coupled with custom deterministic heuristic engines and localized natural language fallback synthesis.
+- **Vision OCR Engine:** Tesseract.js (Open-source optical character recognition) executed client/backend side for screenshot text extraction.
+- **Frontend Frameworks & Libraries:** React 18, Vite, Tailwind CSS v4, Lucide React Icons, Canvas Confetti.
+- **Backend Frameworks & Libraries:** Node.js, Express.js, Helmet, Express-Rate-Limit, CORS, Multer.
+- **Threat Intelligence Feeds:** Localized heuristic signature databases with optional connectors to Google Safe Browsing and VirusTotal APIs.
+
+### 2. Originality & Integrity Statement
+- All application source code, custom heuristic algorithms, risk weighting equations, interactive threat sandbox scenarios, and multilingual educational content were authored and developed within the official GFG Code Sangam hackathon duration.
 
 ---
 
-## 2. Our Solution: ThreatLens AI
-**ThreatLens AI** is an evidence-based digital threat analyzer and interactive cyber academy. It shifts cybersecurity defense from opaque blocking to transparent empowerment:
+## 🎯 Problem Statement (PS-06) & Solution Overview
+
+### The Problem
+Every day, ordinary citizens fall victim to digital scams, smishing, look-alike domain phishing, UPI inverse-charge traps, executive spoofing, and "Digital Arrest" coercion. Conventional antivirus tools provide binary verdicts ("Safe" vs "Unsafe") without explanation, leaving users vulnerable to subsequent attack variations.
+
+### The Solution: ThreatLens AI
+ThreatLens AI shifts digital defense from opaque blocking to **transparent cognitive empowerment** through a 5-step pipeline:
 
 $$\textbf{DETECT} \longrightarrow \textbf{EXPLAIN} \longrightarrow \textbf{SHOW EVIDENCE} \longrightarrow \textbf{RECOMMEND ACTION} \longrightarrow \textbf{EDUCATE}$$
 
-### Core Capabilities:
-1. **🔗 URL Analyzer:** Deep domain inspection, HTTP unencrypted protocol detection, look-alike brand spoofing, subdomain nesting, homoglyph indicators, and abuse-prone TLD flags (`.xyz`, `.top`, `.tk`, etc.).
-2. **💬 SMS & Messaging Analyzer:** Natural language and lexical parser detecting psychological urgency manipulation ("within 1 hour"), account suspension coercion, credential harvesting, and financial lottery deception.
-3. **📧 Email & BEC Inspector:** Audits sender domain mismatches, executive identity spoofing on free webmail accounts (`@gmail.com`), high-pressure subject lines, and deceptive attachments.
-4. **📸 Direct Screenshot OCR:** Integrated client/backend Tesseract.js engine capable of reading chat screenshots (WhatsApp, SMS), payment confirmations, or fake notices directly from images.
-5. **💳 Payment & UPI Fraud Detector:** Specifically identifies "Scan QR to receive money" or "Enter PIN to claim cashback" inversion traps, advance fee scams, and fake escrow schemes.
-6. **🎓 Cyber Academy & Reflex Quiz:** Educational threat library explaining attacker psychology, realistic attack breakdowns, defensive rules, and an interactive quiz with instant feedback.
+---
+
+## ✨ Key Features & Innovation Vectors
+
+1. **🔗 Multi-Vector Threat Analyzer:**
+   - **URLs:** Deep domain structure inspection, protocol security (HTTP vs HTTPS), look-alike brand spoofing, subdomain nesting, and abuse-prone TLD flags (`.xyz`, `.top`, `.tk`).
+   - **SMS & Messages:** Lexical detection of psychological urgency manipulation ("within 1 hour", "blocked today"), credential harvesting, and lottery scams.
+   - **Emails (BEC):** Sender domain mismatch detection (executives using free webmail `@gmail.com`), high-pressure subject lines, and fraudulent billing demands.
+   - **Voice Vishing & "Digital Arrest":** Audits phone call transcripts for fake law enforcement intimidation, victim isolation demands, and remote screen-sharing tools (*AnyDesk, TeamViewer*).
+   - **Payments & UPI:** Flags "Scan QR to receive money" or "Enter PIN to claim cashback" inversion traps, advance fee scams, and fake escrow schemes.
+   - **Screenshot OCR:** Reads text from chat snapshots, payment receipts, and SMS screenshots using integrated Tesseract.js.
+
+2. **⚖️ Transparent Explainable Risk Engine (0–100):**
+   - Itemized score breakdown showing exactly which signals contributed points.
+   - Multi-vector correlation elevating score when multiple deception techniques are combined.
+   - Prominent **"WHY IS THIS SUSPICIOUS?"** section with direct quotes of detected evidence.
+
+3. **🎮 Threat Sandbox & Attack Simulator:**
+   - Interactive decision sandbox for real-life attacks (UPI QR Marketplace Scams, Fake Police Digital Arrest Video Calls, Subdomain Phishing).
+   - Features mock attacker interfaces, interactive **"X-Ray Clues"**, and instant outcome feedback.
+
+4. **🌐 Multilingual Cyber Academy & Reflex Quiz:**
+   - Educational modules in **English (EN), हिंदी (Hindi), தமிழ் (Tamil), and తెలుగు (Telugu)**.
+   - Interactive quiz with instant answer grading, confetti on mastery, and detailed explanations of **why** each answer is correct.
+
+5. **📄 1-Click PDF Report & WhatsApp Brief Sharing:**
+   - Users can share instant threat alerts with their families or export formal incident reports.
+
+6. **🔒 Zero-Trust Privacy Architecture:**
+   - Strict zero-credential storage policy (passwords, OTPs, PINs, and personal identity numbers are never persisted).
 
 ---
 
-## 3. Modular Architecture
+## 🏛️ Modular System Architecture
 
 ```
                                   [ USER INPUT ]
-               (URL / SMS / Email / Screenshot OCR / Payment Request)
+           (URL / SMS / Email / Voice Transcript / Payment / Screenshot OCR)
                                         │
                                         ▼
                              [ CONTENT EXTRACTION ]
@@ -63,117 +96,80 @@ $$\textbf{DETECT} \longrightarrow \textbf{EXPLAIN} \longrightarrow \textbf{SHOW 
                           (Do's and Don'ts Checklist)
                                         │
                                         ▼
-                            [ CYBER ACADEMY LESSON ]
+                       [ CYBER ACADEMY & SANDBOX LAB ]
 ```
 
 ---
 
-## 4. Tech Stack
+## 🌐 Live Deployment & Repository Links
 
-- **Frontend:** React 18, Vite, Tailwind CSS v4, Lucide React Icons, Canvas Confetti.
-- **Backend:** Node.js (v24+), Express.js, Helmet, Express-Rate-Limit, CORS, Multer.
-- **OCR Engine:** Tesseract.js (Multi-threaded optical character recognition).
-- **AI / LLM Layer:** Secure backend-only LLM integration (Google Gemini / OpenAI compatible) with rich deterministic fallback synthesis.
-- **Threat Intelligence:** Multi-tiered heuristics database with optional external connectors (VirusTotal API, Google Safe Browsing).
-- **Persistence:** Sanitized, zero-credential in-memory & file cache store.
+- 🚀 **Live Production Application:** [https://threatlens-ai-60k2.onrender.com](https://threatlens-ai-60k2.onrender.com)
+- 📂 **GitHub Repository:** [https://github.com/architcoder1234/threatlens-ai](https://github.com/architcoder1234/threatlens-ai)
+- 🩺 **Backend Health API:** [https://threatlens-ai-60k2.onrender.com/health](https://threatlens-ai-60k2.onrender.com/health)
 
 ---
 
-## 5. Risk Scoring Methodology
+## 🛠️ Tech Stack
 
-ThreatLens uses a transparent, itemized scoring engine from **0 to 100**:
-
-| Risk Score | Threat Level | Visual Indicator | Action Policy |
-| :--- | :--- | :--- | :--- |
-| **0 – 20** | **LOW RISK** | 🟢 Emerald | No strong threat indicators detected; exercise normal caution. |
-| **21 – 50** | **MEDIUM RISK** | 🟡 Amber | Potential risk detected; independent verification required. |
-| **51 – 75** | **HIGH RISK** | 🟠 Orange | High probability of deception; avoid clicking links or entering data. |
-| **76 – 100** | **CRITICAL RISK**| 🔴 Red | Strong evidence of malicious intent; cease all interaction immediately. |
-
-### Transparent Score Breakdown Example:
-```
-+25  Look-alike Brand Impersonation (Google)
-+20  Suspicious Top-Level Domain (.xyz)
-+18  Urgency Manipulation & Pressure Tactics
-+20  Threat Intelligence Match
-─────────────────────────────────────────────
-Total Risk Estimate: 83 / 100 (CRITICAL RISK)
-```
-
-> **Important Note:** Scoring is an analytical risk assessment heuristic and does not guarantee absolute safety. We never say "100% Safe".
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React 18, Vite, Tailwind CSS v4, Lucide Icons, Canvas Confetti |
+| **Backend Engine** | Node.js (v24+), Express.js, Helmet, Express-Rate-Limit, CORS, Multer |
+| **OCR Vision** | Tesseract.js |
+| **AI / NLP** | Google Gemini API / OpenAI API with local deterministic NLP synthesis |
+| **Hosting** | Render (Production Monorepo Web Service) |
 
 ---
 
-## 6. Installation & Quickstart
+## 🧪 Local Setup & Installation
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm (v9 or higher)
+- Node.js (v18+)
+- npm (v9+)
 
-### 1. Clone & Setup Backend
+### Quick Start
+```bash
+# 1. Clone repository
+git clone https://github.com/architcoder1234/threatlens-ai.git
+cd threatlens-ai
+
+# 2. Install dependencies & build
+npm run install:all
+npm run build
+
+# 3. Start Backend Server
+npm start
+# Server will run on http://localhost:5000 (serving both API and Frontend)
+```
+
+### Running Automated Test Suite
 ```bash
 cd backend
-npm install
-npm run dev
-# Backend starts at http://localhost:5000
-```
-
-### 2. Setup Frontend
-```bash
-cd ../frontend
-npm install
-npm run dev
-# Frontend starts at http://localhost:5173
+node test_suite.js
+# Runs 33/33 comprehensive automated end-to-end tests
 ```
 
 ---
 
-## 7. Environment Configuration (`.env`)
-
-Create a `.env` file in `backend/.env`:
-```env
-PORT=5000
-NODE_ENV=development
-
-# Optional LLM API Key (Fallback NLP engine operates automatically if omitted)
-GEMINI_API_KEY=
-OPENAI_API_KEY=
-
-# External Threat Intelligence APIs (Optional)
-VIRUSTOTAL_API_KEY=
-GOOGLE_SAFE_BROWSING_KEY=
-```
-
----
-
-## 8. REST API Documentation
+## 📜 REST API Documentation
 
 | Method | Endpoint | Description | Sample Payload |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/api/analyze/url` | Deep URL inspection | `{ "url": "https://sbi-kyc.top/auth" }` |
-| `POST` | `/api/analyze/message` | SMS / chat threat parsing | `{ "content": "Your account is blocked today..." }` |
-| `POST` | `/api/analyze/email` | Header & body audit | `{ "sender": "...", "subject": "...", "body": "..." }` |
-| `POST` | `/api/analyze/payment` | UPI / payment trap check | `{ "amount": "15000", "payee": "...", "note": "..." }` |
-| `POST` | `/api/analyze/screenshot` | OCR image text extraction | Multipart form-data (`screenshot` file) |
+| `POST` | `/api/analyze/url` | URL structure & brand inspection | `{ "url": "https://sbi-kyc.top/auth" }` |
+| `POST` | `/api/analyze/message` | SMS & chat urgency detection | `{ "content": "Your account is blocked today..." }` |
+| `POST` | `/api/analyze/email` | Email header & BEC check | `{ "sender": "...", "subject": "...", "body": "..." }` |
+| `POST` | `/api/analyze/payment` | UPI / QR trap check | `{ "amount": "15000", "payee": "...", "note": "..." }` |
+| `POST` | `/api/analyze/audio` | Voice call / vishing check | `{ "transcript": "CBI Officer calling..." }` |
+| `POST` | `/api/analyze/screenshot`| OCR image text extraction | Multipart form-data (`screenshot` file) |
 | `GET` | `/api/history` | Retrieve past sanitized scans | — |
-| `DELETE`| `/api/history/:id` | Remove a specific report | — |
 | `GET` | `/api/learning` | Fetch Academy modules & quiz | — |
 | `POST` | `/api/quiz/submit` | Grade interactive quiz | `{ "answers": { "q1": 1, "q2": 2 } }` |
 | `GET` | `/api/demo` | Fetch curated live test demos | — |
 
 ---
 
-## 9. Privacy & Safety Principles
-
-1. **Zero Credential Storage:** Passwords, 6-digit OTPs, Aadhaar numbers, and UPI PINs are never stored or logged in telemetry.
-2. **Backend Secret Isolation:** API keys reside strictly on the server and are never bundled into frontend assets.
-3. **Sanitization on Ingestion:** Analysis records are stripped of sensitive parameters before storage.
-4. **Data Purge:** Users can clear history records at any time.
-
----
-
-## 10. Future Scope & Roadmap
-- **Browser Extension:** Inline real-time DOM scanner highlighting deceptive form fields before submission.
-- **Multi-lingual NLP:** Expanding dialect detection to 12+ regional Indian languages for rural smishing protection.
-- **Community Threat Sharing:** Decentralized threat telemetry sharing verified indicators with open-source threat databases.
-- **Audio Vishing Analyzer:** Live speech-to-text analyzer flagging phone scam intimidation patterns.
+## 🛡️ Privacy & Security Principles
+1. **Zero Credential Storage:** Passwords, OTPs, Aadhaar numbers, and UPI PINs are never stored or logged.
+2. **Data Minimization:** Sanitization filters strip sensitive tokens prior to history persistence.
+3. **Data Sovereignty:** Users can delete individual records or purge complete history with one click.
+4. **Analytical Risk Estimate:** Clearly labeled as an analytical risk assessment heuristic rather than scientifically validated absolute safety.
