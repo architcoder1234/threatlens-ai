@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 
 export default function Results({ report, onBackToAnalyze, onGoToLearn }) {
+  const [copied, setCopied] = React.useState(false);
+
   if (!report) {
     return (
       <div className="text-center py-20 space-y-4">
@@ -48,6 +50,22 @@ export default function Results({ report, onBackToAnalyze, onGoToLearn }) {
     extractedText,
     inputType = 'content'
   } = report;
+
+  const handleCopySummary = () => {
+    const textToCopy = `🛡️ ThreatLens AI Threat Report
+• Risk Index: ${riskScore}/100 (${riskLevel})
+• Categories: ${categories.join(', ')}
+• Summary: ${explanation}
+• Action: ${recommendations.summary}
+Analyzed via: https://threatlens-ai-60k2.onrender.com`;
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 3000);
+  };
+
+  const handlePrintReport = () => {
+    window.print();
+  };
 
   // Determine badge styling
   const getRiskBadge = () => {
@@ -90,19 +108,33 @@ export default function Results({ report, onBackToAnalyze, onGoToLearn }) {
     <div className="max-w-4xl mx-auto space-y-8 pb-20">
       
       {/* Top Action Bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <button
           onClick={onBackToAnalyze}
-          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer w-fit"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Scanner</span>
         </button>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-mono">
-            Analyzed {new Date(report.timestamp || Date.now()).toLocaleTimeString()}
-          </span>
+          <button
+            onClick={handleCopySummary}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors cursor-pointer"
+            title="Copy Report Brief to Clipboard"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>{copied ? 'Copied!' : 'Share Threat Brief'}</span>
+          </button>
+
+          <button
+            onClick={handlePrintReport}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors cursor-pointer"
+            title="Download or Print PDF Report"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export / Print PDF</span>
+          </button>
         </div>
       </div>
 
